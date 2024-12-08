@@ -14,11 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Vote {
     @Id
     private String id;
-    private Session session;
+    private String vote;
     private String associatedId;
-    private voteType voto;
-
-    public enum voteType {
-        SIM, NAO
-    }
+    private Session session;
 }
