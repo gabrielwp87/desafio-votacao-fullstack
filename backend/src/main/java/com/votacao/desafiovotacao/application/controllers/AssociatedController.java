@@ -22,9 +22,9 @@ public class AssociatedController {
         return new ResponseEntity<>(associatedService.createAssociated(associatedDTO), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> get(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> get(@RequestParam(value = "id") String id) {
         return new ResponseEntity<>(associatedService.get(id), HttpStatus.OK);
     }
 
@@ -34,16 +34,16 @@ public class AssociatedController {
         return new ResponseEntity<>(associatedService.findAll(), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> update(@PathVariable(value = "id") String id, @RequestBody AssociatedDTO associatedDTO) {
+    public ResponseEntity<?> update(@RequestParam(value = "id") String id, @RequestBody AssociatedDTO associatedDTO) {
         return new ResponseEntity<>(associatedService.update(id, associatedDTO), HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> delete(@RequestParam(value = "id") String id) {
         associatedService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

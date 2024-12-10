@@ -15,9 +15,4 @@ public class Associated {
     private String id;
     private String cpf;
     private String name;
-    private Associated ableToVote;
-
-    public enum ableToVote {
-        ABLE_TO_VOTE, UNABLE_TO_VOTE
-    }
 }

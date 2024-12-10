@@ -55,9 +55,9 @@ public class VoteController {
         return new ResponseEntity<>(voteService.findAll(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/vote/{id}")
+    @DeleteMapping("/vote")
     @CrossOrigin("*")
-    public ResponseEntity<?> deleteVote(@PathVariable (value = "id") String id) {
+    public ResponseEntity<?> deleteVote(@RequestParam (value = "id") String id) {
         voteService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -69,9 +69,9 @@ public class VoteController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/votes/result/{session_id}")
+    @GetMapping("/votes/result")
     @CrossOrigin("*")
-    public ResponseEntity<?> getVotesResult(@PathVariable (value = "session_id") String session_id) {
+    public ResponseEntity<?> getVotesResult(@RequestParam (value = "session_id") String session_id) {
         return new ResponseEntity<>(voteService.getVotesResult(session_id), HttpStatus.OK);
     }
 }

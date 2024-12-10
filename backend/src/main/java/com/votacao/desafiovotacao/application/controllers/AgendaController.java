@@ -37,21 +37,21 @@ public class AgendaController {
         return new ResponseEntity<>(agendaService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> get(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> get(@RequestParam(value = "id") String id) {
         return new ResponseEntity<>(agendaService.get(id), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> update(@PathVariable(value = "id") String id, @RequestBody AgendaDTO agendaDTO) {
+    public ResponseEntity<?> update(@RequestParam(value = "id") String id, @RequestBody AgendaDTO agendaDTO) {
         return new ResponseEntity<>(agendaService.update(id, agendaDTO), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id")
     @CrossOrigin("*")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> delete(@RequestParam(value = "id") String id) {
         agendaService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
