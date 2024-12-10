@@ -1,7 +1,8 @@
 package com.votacao.desafiovotacao.application.controllers;
 
 import com.votacao.desafiovotacao.application.dtos.AssociatedDTO;
-import com.votacao.desafiovotacao.domain.entities.Associated;
+import com.votacao.desafiovotacao.domain.exceptions.CPFInvalidException;
+import com.votacao.desafiovotacao.domain.exceptions.NameNeededException;
 import com.votacao.desafiovotacao.domain.services.AssociatedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +19,14 @@ public class AssociatedController {
 
     @PostMapping("/create")
     @CrossOrigin("*")
-    public ResponseEntity<Associated> createAssociated(@RequestBody AssociatedDTO associatedDTO) {
-        return new ResponseEntity<>(associatedService.createAssociated(associatedDTO), HttpStatus.CREATED);
+    public ResponseEntity<?> createAssociated(@RequestBody AssociatedDTO associatedDTO) {
+        try {
+            return new ResponseEntity<>(associatedService.createAssociated(associatedDTO), HttpStatus.CREATED);
+        } catch (NameNeededException e) {
+            return new ResponseEntity<>(e.getMessage() ,HttpStatus.BAD_REQUEST);
+        } catch (CPFInvalidException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/id")

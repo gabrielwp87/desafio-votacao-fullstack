@@ -1,11 +1,9 @@
 package com.votacao.desafiovotacao.application.controllers;
 
 import com.votacao.desafiovotacao.application.dtos.AgendaDTO;
-import com.votacao.desafiovotacao.domain.entities.Agenda;
 import com.votacao.desafiovotacao.domain.exceptions.AgendaNotValidException;
 import com.votacao.desafiovotacao.domain.services.AgendaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +18,12 @@ public class AgendaController {
 
     @PostMapping
     @CrossOrigin("*")
-    public ResponseEntity<Agenda> createAgenda(@RequestBody AgendaDTO agendaDTO) throws AgendaNotValidException {
+    public ResponseEntity<?> createAgenda(@RequestBody AgendaDTO agendaDTO) throws AgendaNotValidException {
         try {
             return new ResponseEntity<>(agendaService.createAgenda(agendaDTO), HttpStatus.CREATED);
 
-        // TODO: fix this exception handling
         } catch (AgendaNotValidException e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Agenda not valid", HttpStatus.BAD_REQUEST);
         }
     }
 

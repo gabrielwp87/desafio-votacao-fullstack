@@ -33,7 +33,7 @@ public class VoteService {
             throw new AlreadyVotedException();
         }
 
-        if (!validateSessionForVoting(voteDTO)) {
+        if (validateSessionForVoting(voteDTO)) {
             throw new NoSessionToVoteException();
         }
 
@@ -90,7 +90,8 @@ public class VoteService {
     public Boolean validateSessionForVoting(VoteDTO voteDTO) {
 
         Optional<Session> session = sessionService.get(voteDTO.sessionId());
-        return session.isPresent();
+
+        return (!session.isPresent()) || session.get().getStatus().equals(Session.StatusSession.ENCERRADA);
     }
 
 

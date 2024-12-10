@@ -29,11 +29,19 @@ public class SessionService {
     public Session createSession(SessionDTO sessionDTO)
             throws AgendaNotFoundException, SessionTimeException {
 
-        long duration = Long.parseLong(sessionDTO.duration());
+        long duration;
+        if (!sessionDTO.duration().isEmpty()) {
+            try {
+                duration = Long.parseLong(sessionDTO.duration());
+            } catch (NumberFormatException e) {
+                throw new NumberFormatException("The duration must be a integer");
+            }
+        } else {
+            duration = TIME_DEFAULT;
+        }
 
         String agendaId = sessionDTO.agendaId();
 
-        // TODO: fix this
         // Validate if the agenda exists and if the time is valid
         validatePostSessionRequest(sessionDTO, duration);
 
@@ -102,12 +110,12 @@ public class SessionService {
         // Validate if the agenda exists
         Optional<Agenda> optionalAgenda = agendaRepository.findById(sessionDTO.agendaId());
 
-        if (!optionalAgenda.isPresent()) {
+        if (optionalAgenda.isEmpty()) {
             throw new AgendaNotFoundException();
         }
 
         // Validate if the time is valid
-        if (ObjectUtils.isEmpty(minutesOpened) || minutesOpened < TIME_DEFAULT) {
+        if (minutesOpened < TIME_DEFAULT) {
             throw new SessionTimeException();
         }
     }
