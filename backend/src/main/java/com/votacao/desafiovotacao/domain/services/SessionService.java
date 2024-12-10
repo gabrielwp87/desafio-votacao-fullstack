@@ -1,18 +1,20 @@
 package com.votacao.desafiovotacao.domain.services;
 
+import com.votacao.desafiovotacao.application.dtos.SessionDTO;
 import com.votacao.desafiovotacao.domain.entities.Agenda;
 import com.votacao.desafiovotacao.domain.entities.Session;
 import com.votacao.desafiovotacao.domain.exceptions.AgendaNotFoundException;
 import com.votacao.desafiovotacao.domain.exceptions.SessionTimeException;
+import com.votacao.desafiovotacao.infra.AgendaRepository;
 import com.votacao.desafiovotacao.infra.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class SessionService {
@@ -21,47 +23,92 @@ public class SessionService {
 
     @Autowired
     SessionRepository sessionRepository;
+    @Autowired
+    private AgendaRepository agendaRepository;
 
-    public Optional<Session> save(Session session) {
-        return Optional.ofNullable(sessionRepository.save(session));
+    public Session createSession(SessionDTO sessionDTO)
+            throws AgendaNotFoundException, SessionTimeException {
+
+        long duration = Long.parseLong(sessionDTO.duration());
+
+        String agendaId = sessionDTO.agendaId();
+
+        // TODO: fix this
+        // Validate if the agenda exists and if the time is valid
+        validatePostSessionRequest(sessionDTO, duration);
+
+        // Create the session
+        Session session = Session.builder()
+                .id(sessionDTO.id())
+                .agendaId(agendaId)
+                .startTime(LocalDateTime.now())
+                .closedTime(LocalDateTime.now().plusMinutes(duration))
+                .status(Session.StatusSession.ABERTA)
+                .build();
+        return sessionRepository.save(session);
     }
 
     public Optional<Session> get(String sessionId) {
-        return sessionRepository.findById(sessionId);
+
+        Session session = sessionRepository.findById(sessionId).get();
+
+        if (isSessionClosed(session)) {
+            closeSession(session);
+        }
+        return Optional.of(session);
     }
 
+    public List<Session> findAll() {
 
-    public ResponseEntity<Session> startSession(Long minutesOpened, Agenda agenda) {
-        if (minutesOpened == null) {
-            minutesOpened = TIME_DEFAULT;
+        List<Session> sessions = sessionRepository.findAll();
+        for (Session s : sessions) {
+            if (isSessionClosed(s)) {
+                closeSession(s);
+            }
         }
-
-        Session session = Session.builder()
-                .agendaId(agenda.getId())
-                .startTime(LocalDateTime.now())
-                .closedTime(LocalDateTime.now().plusMinutes(minutesOpened))
-                .status(Session.StatusSession.ABERTA)
-                .build();
-
-        Optional<Session> optionalSessionEntity = save(session);
-
-        if (optionalSessionEntity.isPresent()) {
-            return new ResponseEntity<>(optionalSessionEntity.get(), HttpStatus.CREATED);
-
-        }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return sessions;
     }
 
-    public void validatePostSessionRequest(Optional<Agenda> optionalAgenda, Long minutesOpened)
+    public Session update(String id, SessionDTO sessionDTO) {
+        Session session = sessionRepository.findById(id).orElse(null);
+        if (session == null) return null;
+        session.setAgendaId(sessionDTO.agendaId());
+        session.setStartTime(LocalDateTime.now());
+        session.setClosedTime(LocalDateTime.now().plusMinutes(Long.parseLong(sessionDTO.duration())));
+        session.setStatus(Session.StatusSession.ABERTA);
+        return sessionRepository.save(session);
+    }
+
+    public void delete(String sessionId) {
+        sessionRepository.deleteById(sessionId);
+    }
+
+    public void deleteAll() {
+        sessionRepository.deleteAll();
+    }
+
+    public boolean isSessionClosed(Session session) {
+        return LocalDateTime.now().isAfter(session.getClosedTime());
+    }
+
+    public void closeSession(Session session) {
+        session.setStatus(Session.StatusSession.ENCERRADA);
+        sessionRepository.save(session);
+    }
+
+    public void validatePostSessionRequest(SessionDTO sessionDTO, Long minutesOpened)
             throws AgendaNotFoundException, SessionTimeException {
+
+        // Validate if the agenda exists
+        Optional<Agenda> optionalAgenda = agendaRepository.findById(sessionDTO.agendaId());
 
         if (!optionalAgenda.isPresent()) {
             throw new AgendaNotFoundException();
         }
 
+        // Validate if the time is valid
         if (ObjectUtils.isEmpty(minutesOpened) || minutesOpened < TIME_DEFAULT) {
             throw new SessionTimeException();
-
         }
     }
 }
