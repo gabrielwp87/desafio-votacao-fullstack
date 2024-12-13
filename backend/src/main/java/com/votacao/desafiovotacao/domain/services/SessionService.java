@@ -9,7 +9,6 @@ import com.votacao.desafiovotacao.infra.AgendaRepository;
 import com.votacao.desafiovotacao.infra.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,10 +41,8 @@ public class SessionService {
 
         String agendaId = sessionDTO.agendaId();
 
-        // Validate if the agenda exists and if the time is valid
         validatePostSessionRequest(sessionDTO, duration);
 
-        // Create the session
         Session session = Session.builder()
                 .id(sessionDTO.id())
                 .agendaId(agendaId)
@@ -107,14 +104,12 @@ public class SessionService {
     public void validatePostSessionRequest(SessionDTO sessionDTO, Long minutesOpened)
             throws AgendaNotFoundException, SessionTimeException {
 
-        // Validate if the agenda exists
         Optional<Agenda> optionalAgenda = agendaRepository.findById(sessionDTO.agendaId());
 
         if (optionalAgenda.isEmpty()) {
             throw new AgendaNotFoundException();
         }
 
-        // Validate if the time is valid
         if (minutesOpened < TIME_DEFAULT) {
             throw new SessionTimeException();
         }

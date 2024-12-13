@@ -1,6 +1,7 @@
 package com.votacao.desafiovotacao.application.controllers;
 
 import com.votacao.desafiovotacao.application.dtos.AssociatedDTO;
+import com.votacao.desafiovotacao.domain.exceptions.CPFAlreadyExistsException;
 import com.votacao.desafiovotacao.domain.exceptions.CPFInvalidException;
 import com.votacao.desafiovotacao.domain.exceptions.NameNeededException;
 import com.votacao.desafiovotacao.domain.services.AssociatedService;
@@ -26,6 +27,8 @@ public class AssociatedController {
             return new ResponseEntity<>(e.getMessage() ,HttpStatus.BAD_REQUEST);
         } catch (CPFInvalidException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (CPFAlreadyExistsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -46,7 +49,6 @@ public class AssociatedController {
     public ResponseEntity<?> update(@RequestParam(value = "id") String id, @RequestBody AssociatedDTO associatedDTO) {
         return new ResponseEntity<>(associatedService.update(id, associatedDTO), HttpStatus.OK);
     }
-
 
     @DeleteMapping("/id")
     @CrossOrigin("*")

@@ -23,7 +23,7 @@ public class AgendaController {
             return new ResponseEntity<>(agendaService.createAgenda(agendaDTO), HttpStatus.CREATED);
 
         } catch (AgendaNotValidException e) {
-            return new ResponseEntity<>("Agenda not valid", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 

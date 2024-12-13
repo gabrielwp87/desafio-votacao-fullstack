@@ -2,7 +2,6 @@ package com.votacao.desafiovotacao.application.controllers;
 
 import com.votacao.desafiovotacao.application.dtos.SessionDTO;
 import com.votacao.desafiovotacao.application.dtos.VoteResponseDTO;
-import com.votacao.desafiovotacao.domain.entities.Session;
 import com.votacao.desafiovotacao.domain.exceptions.AgendaNotFoundException;
 import com.votacao.desafiovotacao.domain.exceptions.SessionTimeException;
 import com.votacao.desafiovotacao.domain.services.SessionService;
