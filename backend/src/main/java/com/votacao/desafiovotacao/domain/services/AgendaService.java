@@ -4,6 +4,7 @@ import com.votacao.desafiovotacao.application.dtos.AgendaDTO;
 import com.votacao.desafiovotacao.domain.entities.Agenda;
 import com.votacao.desafiovotacao.domain.exceptions.AgendaNotValidException;
 import com.votacao.desafiovotacao.infra.AgendaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,11 @@ public class AgendaService {
 
     public Agenda createAgenda(AgendaDTO agendaDTO) throws AgendaNotValidException {
 
-        if (agendaDTO.description().isEmpty()) throw new AgendaNotValidException();
+        if (agendaDTO.description().isEmpty() || agendaDTO.id().isEmpty()) throw new AgendaNotValidException();
 
-        Agenda agenda = Agenda.builder()
-                .id(agendaDTO.id())
-                .title(agendaDTO.title())
-                .description(agendaDTO.description())
-                .status(agendaDTO.status())
-                .build();
+        Agenda agenda = Agenda.builder().build();
+        BeanUtils.copyProperties(agendaDTO, agenda);
+
         return agendaRepository.save(agenda);
     }
 

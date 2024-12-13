@@ -46,11 +46,6 @@ public class AssociatedService {
         Associated associated = Associated.builder().build();
         BeanUtils.copyProperties(associatedDTO, associated);
 
-//        Associated associated = Associated.builder()
-//                .id(associatedDTO.id())
-//                .cpf(associatedDTO.cpf())
-//                .name(associatedDTO.name())
-//                .build();
         return associatedRepository.save(associated);
     }
 
