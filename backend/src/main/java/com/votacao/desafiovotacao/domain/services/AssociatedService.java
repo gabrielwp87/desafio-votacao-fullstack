@@ -1,11 +1,13 @@
 package com.votacao.desafiovotacao.domain.services;
 
 import com.votacao.desafiovotacao.application.dtos.AssociatedDTO;
+import com.votacao.desafiovotacao.domain.entities.Agenda;
 import com.votacao.desafiovotacao.domain.entities.Associated;
 import com.votacao.desafiovotacao.domain.exceptions.CPFAlreadyExistsException;
 import com.votacao.desafiovotacao.domain.exceptions.CPFInvalidException;
 import com.votacao.desafiovotacao.domain.exceptions.NameNeededException;
 import com.votacao.desafiovotacao.infra.AssociatedRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,11 +43,14 @@ public class AssociatedService {
             throw new CPFAlreadyExistsException();
         }
 
-        Associated associated = Associated.builder()
-                .id(associatedDTO.id())
-                .cpf(associatedDTO.cpf())
-                .name(associatedDTO.name())
-                .build();
+        Associated associated = Associated.builder().build();
+        BeanUtils.copyProperties(associatedDTO, associated);
+
+//        Associated associated = Associated.builder()
+//                .id(associatedDTO.id())
+//                .cpf(associatedDTO.cpf())
+//                .name(associatedDTO.name())
+//                .build();
         return associatedRepository.save(associated);
     }
 

@@ -23,16 +23,9 @@ public class SessionController {
 
     @PostMapping("/create")
     @CrossOrigin("*")
-    public ResponseEntity<?> createSession(@RequestBody SessionDTO sessionDTO) {
-        try {
+    public ResponseEntity<?> createSession(@RequestBody SessionDTO sessionDTO)
+            throws AgendaNotFoundException, SessionTimeException {
             return new ResponseEntity<>(sessionService.createSession(sessionDTO), HttpStatus.CREATED);
-        } catch (AgendaNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (SessionTimeException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (NumberFormatException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping("/id")

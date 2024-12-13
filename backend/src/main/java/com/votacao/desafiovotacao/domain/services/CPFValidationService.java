@@ -1,5 +1,6 @@
 package com.votacao.desafiovotacao.domain.services;
 
+import com.votacao.desafiovotacao.domain.exceptions.CPFInvalidException;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;

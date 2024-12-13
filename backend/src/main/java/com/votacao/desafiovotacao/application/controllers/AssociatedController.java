@@ -20,16 +20,9 @@ public class AssociatedController {
 
     @PostMapping("/create")
     @CrossOrigin("*")
-    public ResponseEntity<?> createAssociated(@RequestBody AssociatedDTO associatedDTO) {
-        try {
-            return new ResponseEntity<>(associatedService.createAssociated(associatedDTO), HttpStatus.CREATED);
-        } catch (NameNeededException e) {
-            return new ResponseEntity<>(e.getMessage() ,HttpStatus.BAD_REQUEST);
-        } catch (CPFInvalidException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (CPFAlreadyExistsException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> createAssociated(@RequestBody AssociatedDTO associatedDTO)
+            throws NameNeededException, CPFInvalidException, CPFAlreadyExistsException {
+        return new ResponseEntity<>(associatedService.createAssociated(associatedDTO), HttpStatus.CREATED);
     }
 
     @GetMapping("/id")

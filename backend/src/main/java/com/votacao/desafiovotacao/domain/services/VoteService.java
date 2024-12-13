@@ -27,7 +27,8 @@ public class VoteService {
     @Autowired
     private SessionService sessionService;
 
-    public Optional<Vote> registerVote(VoteDTO voteDTO) throws AlreadyVotedException, NoSessionToVoteException {
+    public Optional<Vote> registerVote(VoteDTO voteDTO)
+            throws AlreadyVotedException, NoSessionToVoteException {
 
         if (validateAssociateAlreadyVote(sessionService.get(voteDTO.sessionId()), voteDTO.associatedId())) {
             throw new AlreadyVotedException();

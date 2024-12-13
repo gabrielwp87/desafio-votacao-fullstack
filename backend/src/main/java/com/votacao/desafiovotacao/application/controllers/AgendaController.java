@@ -19,12 +19,7 @@ public class AgendaController {
     @PostMapping
     @CrossOrigin("*")
     public ResponseEntity<?> createAgenda(@RequestBody AgendaDTO agendaDTO) throws AgendaNotValidException {
-        try {
             return new ResponseEntity<>(agendaService.createAgenda(agendaDTO), HttpStatus.CREATED);
-
-        } catch (AgendaNotValidException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping

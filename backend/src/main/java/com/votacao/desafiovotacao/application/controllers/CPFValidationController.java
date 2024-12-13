@@ -4,10 +4,7 @@ import com.votacao.desafiovotacao.domain.services.CPFValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +17,8 @@ public class CPFValidationController {
     private CPFValidationService cpfValidationService;
 
     @GetMapping("")
-    public Object validateCpf(@RequestParam String cpf) {
+    @CrossOrigin("*")
+    public ResponseEntity<?> validateCpf(@RequestParam String cpf) {
 
         if(!cpfValidationService.isValid(cpf)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF inválido");
@@ -33,5 +31,7 @@ public class CPFValidationController {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
     }
 }
+

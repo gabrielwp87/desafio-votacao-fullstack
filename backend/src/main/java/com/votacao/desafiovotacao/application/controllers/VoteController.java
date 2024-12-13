@@ -3,8 +3,6 @@ package com.votacao.desafiovotacao.application.controllers;
 import com.votacao.desafiovotacao.application.dtos.VoteDTO;
 import com.votacao.desafiovotacao.domain.exceptions.AlreadyVotedException;
 import com.votacao.desafiovotacao.domain.exceptions.NoSessionToVoteException;
-import com.votacao.desafiovotacao.domain.services.AgendaService;
-import com.votacao.desafiovotacao.domain.services.SessionService;
 import com.votacao.desafiovotacao.domain.services.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,24 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class VoteController {
 
     @Autowired
-    private AgendaService agendaService;
-
-    @Autowired
-    private SessionService sessionService;
-
-    @Autowired
     private VoteService voteService;
 
     @PostMapping("/vote")
     @CrossOrigin("*")
-    public ResponseEntity<?> registerVote(@RequestBody VoteDTO voteDTO) throws AlreadyVotedException, NoSessionToVoteException {
-        try {
+    public ResponseEntity<?> registerVote(@RequestBody VoteDTO voteDTO)
+            throws AlreadyVotedException, NoSessionToVoteException {
             return new ResponseEntity<>(voteService.registerVote(voteDTO), HttpStatus.OK);
-        } catch (AlreadyVotedException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        } catch (NoSessionToVoteException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
     }
 
     @GetMapping("/result")
