@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import {Box, Button, Grid2, Paper, Stack} from "@mui/material";
-import {Link, Navigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import MainContainer from "../ui/Util/main-container.tsx";
 
 
@@ -9,6 +9,9 @@ function Home() {
 
     const [goToAssociated, setGoToAssociated] = React.useState(false);
     const [goToAgenda, setGoToAgenda] = React.useState(false);
+    const [goToSession, setGoToSession] = React.useState(false);
+    const [goToVote, setGoToVote] = React.useState(false);
+    const [goToVoteResult, setGoToVoteResult] = React.useState(false);
 
     if (goToAssociated) {
         return <Navigate to="/associated" />;
@@ -16,6 +19,18 @@ function Home() {
 
     if (goToAgenda) {
         return <Navigate to="/agenda" />;
+    }
+
+    if (goToSession) {
+        return <Navigate to="/session" />
+    }
+
+    if (goToVote) {
+        return <Navigate to="/vote" />
+    }
+
+    if (goToVoteResult) {
+        return <Navigate to="/vote/result" />
     }
 
 
@@ -61,12 +76,37 @@ function Home() {
                             </Button>
                         </Paper>
                         <Paper>
-                            <Button fullWidth={true} variant="outlined" color="success">
-                                <Link to="/CPFvalidator" style={{textDecoration: 'none', color: 'inherit'}}>
-                                    Validar um CPF
-                                </Link>
+                            <Button fullWidth={true} variant="outlined" color="success"
+                                    onClick={() => {
+                                        setGoToSession(true);
+                                    }}
+                            >
+
+                                Abrir uma Sessão para votação
                             </Button>
                         </Paper>
+                        <Paper>
+                            <Button fullWidth={true} variant="outlined" color="success"
+                                    onClick={() => {
+                                        setGoToVote(true);
+                                    }}
+                            >
+
+                                Votar
+                            </Button>
+                        </Paper>
+
+                        <Paper>
+                            <Button fullWidth={true} variant="outlined" color="success"
+                                    onClick={() => {
+                                        setGoToVoteResult(true);
+                                    }}
+                            >
+
+                                Resultado das Votações
+                            </Button>
+                        </Paper>
+
                     </Stack>
                 </Grid2>
             </Box>

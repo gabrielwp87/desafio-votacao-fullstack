@@ -7,9 +7,10 @@ import {
 
 import Associated from "./associated";
 import Agenda from "./Agenda";
-import Index from "./Session";
+import Session from "./Session";
 import Home from "./Home";
-import Vote from "./Vote/vote.tsx";
+import Vote from "./Vote";
+import VoteResult from "./Vote/result.tsx";
 
 
 export function App() {
@@ -21,9 +22,9 @@ export function App() {
                     <Route path="/" element={<Home />}></Route>
                     <Route path="/agenda" element={<Agenda />}></Route>
                     <Route path="/associated" element={<Associated />}></Route>
-                    <Route path="/session" element={<Index />}></Route>
+                    <Route path="/session" element={<Session />}></Route>
                     <Route path="/vote" element={<Vote />}></Route>
-                    {/*<Route path="/CPFvalidator" element={<CPFvalidator />}></Route>*/}
+                    <Route path="/vote/result" element={<VoteResult />}></Route>
                 </Routes>
             </Router>
         </MainContainer>

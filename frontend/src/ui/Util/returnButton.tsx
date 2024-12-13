@@ -10,10 +10,10 @@ function ReturnButton() {
         return <Navigate to="/" />;
     }
     return (
-    <Button variant="contained" color="success" onClick={() => {
+    <Button variant="outlined" color="error" onClick={() => {
         setGoToHome(true);
     }}>
-        Voltar
+        Retornar
     </Button>
 
     );

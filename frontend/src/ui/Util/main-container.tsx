@@ -12,6 +12,7 @@ export default function MainContainer({children, }: {
                     minHeight: "100vh"
                 },
                 marginTop: 4,
+                marginBottom: 4,
                 // marginRight: 2,
                 // paddingY: 2,
                 // paddingX: 4,
