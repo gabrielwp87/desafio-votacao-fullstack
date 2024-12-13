@@ -108,4 +108,8 @@ public class VoteService {
     private String associatedVoteHandler(String associatedVote) {
         return associatedVote.toUpperCase().trim();
     }
+
+    public List<Vote> findAllVotesBySessionById(String sessionId) {
+        return voteRepository.findAllBySessionId(sessionId);
+    }
 }

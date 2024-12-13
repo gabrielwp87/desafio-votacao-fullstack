@@ -3,7 +3,6 @@ package com.votacao.desafiovotacao.application.controllers;
 import com.votacao.desafiovotacao.application.dtos.VoteDTO;
 import com.votacao.desafiovotacao.domain.exceptions.AlreadyVotedException;
 import com.votacao.desafiovotacao.domain.exceptions.NoSessionToVoteException;
-import com.votacao.desafiovotacao.domain.exceptions.SessionTimeException;
 import com.votacao.desafiovotacao.domain.services.AgendaService;
 import com.votacao.desafiovotacao.domain.services.SessionService;
 import com.votacao.desafiovotacao.domain.services.VoteService;

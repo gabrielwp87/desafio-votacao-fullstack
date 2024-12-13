@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AssociatedRepository extends MongoRepository<Associated, String> {
+    Boolean findByCpf(String cpf);
 }
