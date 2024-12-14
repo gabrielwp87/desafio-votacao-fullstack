@@ -71,7 +71,7 @@ export default function VoteResult() {
                         </Button>
 
                         <Box sx={{'& .MuiTextField-root': {m: 1, width: '35ch'}}}>
-                            {voteResult?.totalVotes === "0" || voteResult === null ?
+                            {voteResult?.totalVotes == 0 || voteResult === null ?
                                 (<Typography variant="body2" gutterBottom>
                                     <br/><br/><br/>
                                     Nenhuma votação foi realizada.
