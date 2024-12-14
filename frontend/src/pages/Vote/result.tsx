@@ -12,23 +12,28 @@ import {useState} from "react";
 
 export default function VoteResult() {
     const [sessionId, setSessionId] = useState("");
-    const [voteResult, setVoteResult] = useState<{ voteYes: string; voteNo: string; totalVotes: string }[]>([]);
+    // const [voteResult, setVoteResult] = useState([]);
+    const [voteResult, setVoteResult] = useState<VoteResult | null>(null);
+
+    interface VoteResult {
+        voteYes: number;
+        voteNo: number;
+        totalVotes: number;
+    }
 
     const getVoteResult = async () => {
-        setVoteResult([]); // Reset voteResult state
+        // setVoteResult([]); // Reset voteResult state
         try {
             const response = await apiFetch.get(`/agenda/session/associated/result`, {
                 params: { sessionId }
-            });
-
+            }).then((response) => response);
             const data = response.data.body;
             setVoteResult(data);
 
             // { voteYes: "2", voteNo: "1", totalVotes: "3" }
-            console.log(voteResult);
-            console.log(voteResult.length);
-
             console.log(data);
+
+            return data;
         } catch (e) {
             console.error(e);
         }
@@ -66,20 +71,33 @@ export default function VoteResult() {
                         </Button>
 
                         <Box sx={{'& .MuiTextField-root': {m: 1, width: '35ch'}}}>
-                            {voteResult.length === 0 ? (
-                                <Typography variant="body2" gutterBottom>
+                            {voteResult?.totalVotes === "0" || voteResult === null ?
+                                (<Typography variant="body2" gutterBottom>
                                     <br/><br/><br/>
                                     Nenhuma votação foi realizada.
                                     <br/><br/><br/>
-                                </Typography>
-                            ) : (
-                                <Typography variant="body2" gutterBottom>
-                                    <br/><br/><br/>
-                                    Votos Sim: {voteResult[1]?.voteYes}<br/>
-                                    Votos Não: {voteResult[0]?.voteNo}<br/>
-                                    Total de Votos: {voteResult[0]?.totalVotes}
-                                </Typography>
-                            )}
+                                </Typography>)
+                             :
+                                (<Box>
+                                    <Typography variant="body2" gutterBottom>
+                                        Resultado da votação:
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Votos Sim: {voteResult.voteYes}
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Votos Não: {voteResult.voteNo}
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Total de Votos: {voteResult.totalVotes}
+                                    </Typography>
+                                    <Typography variant="body2" gutterBottom>
+                                        Resultado da votação: {voteResult?.voteYes > voteResult?.voteNo ? "Aprovado" : "Reprovado"}
+                                    </Typography>
+                                    <br/>
+                                    <br/>
+                                </Box>)
+                            }
                         </Box>
                     </Stack>
                 </Grid2>

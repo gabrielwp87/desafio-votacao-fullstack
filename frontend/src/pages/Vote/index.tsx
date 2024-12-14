@@ -34,7 +34,7 @@ export default function Vote() {
         console.log('Voto: ', vote)
 
         const response = {id, associatedId, agendaId, sessionId, vote};
-        await apiFetch.post('/associated', {
+        await apiFetch.post('/agenda/session/associated/vote', {
             body: response,
         });
     }
