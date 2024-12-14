@@ -1,10 +1,28 @@
 "use client";
 import {Box, Button, Grid2, Stack, TextField, Typography} from "@mui/material";
-import MainContainer from "../ui/Util/main-container.tsx";
-import ReturnButton from "../ui/Util/returnButton.tsx";
+import MainContainer from "../../ui/Util/main-container.tsx";
+import ReturnButton from "../../ui/Util/returnButton.tsx";
+import {FormEvent, useState} from "react";
+import apiFetch from "../../axios/config.ts";
 
 export default function Agenda() {
 
+    const [id, setId] = useState("");
+    const [agendaId, setAgendaId] = useState("");
+    const [duration, setDuration] = useState("");
+
+    const createSession = async (e: FormEvent) => {
+        e.preventDefault()
+        console.log('Criando sessão...')
+        console.log('ID da Sessão: ', id)
+        console.log('ID da Pauta: ', agendaId)
+        console.log('Duração: ', duration)
+
+        const response = {id, agendaId, duration};
+        await apiFetch.post('/associated', {
+            body: response,
+        });
+    }
 
     return (
 
@@ -18,6 +36,7 @@ export default function Agenda() {
                 sx={{'& .MuiTextField-root': {m: 1, width: '45ch'}}}
                 noValidate
                 autoComplete="off"
+                onSubmit={createSession}
             >
                 <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                 <Box sx={{'& .MuiTextField-root': {m: 1, width: '25ch'}}}>
@@ -35,12 +54,14 @@ export default function Agenda() {
                             id="filled-required"
                             label="ID da Sessão"
                             variant="filled"
+                            onChange={(e) => setId(e.target.value)}
                         />
                         <TextField
                             required
                             id="filled-required"
                             label="ID da Pauta"
                             variant="filled"
+                            onChange={(e) => setAgendaId(e.target.value)}
                         />
                         <TextField
                             id="filled-number"
@@ -54,9 +75,10 @@ export default function Agenda() {
 
                                 },
                             }}
+                            onChange={(e) => setDuration(e.target.value)}
                         />
 
-                        <Button variant="contained" color="success">
+                        <Button variant="contained" color="success" type="submit">
                             Abrir Sessão
                         </Button>
 

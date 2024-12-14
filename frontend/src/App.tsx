@@ -5,12 +5,12 @@ import {
     Route, Routes,
 } from "react-router-dom";
 
-import Associated from "./associated";
-import Agenda from "./Agenda";
-import Session from "./Session";
+import Associated from "./pages/Associated";
+import Agenda from "./pages/Agenda";
+import Session from "./pages/Session";
 import Home from "./Home";
-import Vote from "./Vote";
-import VoteResult from "./Vote/result.tsx";
+import Vote from "./pages/Vote";
+import VoteResult from "./pages/Vote/result.tsx";
 
 
 export function App() {

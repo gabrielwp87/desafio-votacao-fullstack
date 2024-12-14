@@ -11,17 +11,33 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import MainContainer from "../ui/Util/main-container.tsx";
-import ReturnButton from "../ui/Util/returnButton.tsx";
-import React from "react";
+import MainContainer from "../../ui/Util/main-container.tsx";
+import ReturnButton from "../../ui/Util/returnButton.tsx";
+import {FormEvent, useState} from "react";
 import {green, pink} from "@mui/material/colors";
+import apiFetch from "../../axios/config.ts";
 
-export default function Agenda() {
-    const [value, setValue] = React.useState('female');
+export default function Vote() {
+    const [id, setId] = useState("");
+    const [associatedId, setAssociatedId] = useState("");
+    const [agendaId, setAgendaId] = useState("");
+    const [sessionId, setSessionId] = useState("");
+    const [vote, setVote] = useState("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue((event.target as HTMLInputElement).value);
-    };
+    const registerVote = async (e: FormEvent) => {
+        e.preventDefault()
+        console.log('Votando ...')
+        console.log('ID do Voto: ', id)
+        console.log('ID do Associado: ', id)
+        console.log('ID da Pauta: ', agendaId)
+        console.log('ID da Sessão: ', id)
+        console.log('Voto: ', vote)
+
+        const response = {id, associatedId, agendaId, sessionId, vote};
+        await apiFetch.post('/associated', {
+            body: response,
+        });
+    }
 
     return (
 
@@ -35,6 +51,7 @@ export default function Agenda() {
                 sx={{'& .MuiTextField-root': {m: 1, width: '45ch'}}}
                 noValidate
                 autoComplete="off"
+                onSubmit={registerVote}
             >
                 <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                     <Box sx={{'& .MuiTextField-root': {m: 1, width: '25ch'}}}>
@@ -52,20 +69,30 @@ export default function Agenda() {
                         <TextField
                             required
                             id="filled-required"
+                            label="ID do Voto"
+                            variant="filled"
+                            onChange={(e) => setId(e.target.value)}
+                        />
+                        <TextField
+                            required
+                            id="filled-required"
                             label="ID do Associado"
                             variant="filled"
+                            onChange={(e) => setAssociatedId(e.target.value)}
                         />
                         <TextField
                             required
                             id="filled-required"
                             label="ID da Pauta"
                             variant="filled"
+                            onChange={(e) => setAgendaId(e.target.value)}
                         />
                         <TextField
                             required
                             id="filled-required"
                             label="ID da Sessão"
                             variant="filled"
+                            onChange={(e) => setSessionId(e.target.value)}
                         />
                         <TextField
                             id="filled-required"
@@ -77,7 +104,8 @@ export default function Agenda() {
                                     readOnly: true,
                                 },
                             }}
-                            variant="filled"/>
+                            variant="filled"
+                        />
 
                         <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                             <Box sx={{'& .MuiTextField-root': {m: 1, width: '25ch'}}}>
@@ -93,25 +121,28 @@ export default function Agenda() {
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"
-                                value={value}
-                                onChange={handleChange}
+                                onChange={(e) => setVote(e.target.value)}
                             >
-                                <FormControlLabel  value="YES" control={<Radio  sx={{
+                                <FormControlLabel  value="SIM" control={<Radio  sx={{
                                     color: green[800],
                                     '&.Mui-checked': {
                                         color: green[600],
                                     },
-                                }}/>} label="SIM" />
-                                <FormControlLabel color="danger" value="NO" control={<Radio sx={{
+                                }}/>} label="SIM"
+                                    onChange={() => setVote("SIM")}
+                                />
+                                <FormControlLabel color="danger" value="NÃO" control={<Radio sx={{
                                     color: pink[800],
                                     '&.Mui-checked': {
                                         color: pink[600],
                                     },
-                                }}/>} label="NÃO" />
-                            </RadioGroup>
+                                }}/>} label="NÃO"
+                                    onChange={() => setVote("NÃO")}
+                                />
+                            </RadioGroup >
                         </FormControl>
 
-                        <Button variant="contained" color="success">
+                        <Button variant="contained" color="success" type="submit">
                             Votar
                         </Button>
 
