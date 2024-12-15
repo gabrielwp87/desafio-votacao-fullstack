@@ -24,6 +24,10 @@ public class AgendaService {
         Agenda agenda = Agenda.builder().build();
         BeanUtils.copyProperties(agendaDTO, agenda);
 
+        if(agendaDTO.status() == null) {
+            agenda.setStatus("aberta");
+        }
+
         return agendaRepository.save(agenda);
     }
 
