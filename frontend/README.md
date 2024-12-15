@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# Documentação do Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Visão Geral do Projeto
 
-Currently, two official plugins are available:
+Este projeto é uma aplicação web construída usando React e TypeScript.
+Com o intuito de criar um fronted simples para a API de votação em pautas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **TypeScript**: Um superconjunto tipado de JavaScript que compila para JavaScript puro.
+- **React**: Uma biblioteca JavaScript para construção de interfaces de usuário.
+- **Material-UI**: Um popular framework de UI para React.
+- **React Router**: Uma biblioteca para roteamento em aplicações React.
+- **npm**: Um gerenciador de pacotes para JavaScript.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Estrutura do Projeto
 
-- Configure the top-level `parserOptions` property like this:
+- `src/`: Contém o código fonte do aplicativo.
+    - `axios/`: Configuração para o Axios manipular solicitações da API.
+    - `ui/`: UI componentes reutilizáveis.
+    - `pages/`: Páginas da aplicação.
+    - `App.tsx`: Compnente aplicação principal.
+    - `index.tsx`: Ponto de entrada da aplicação.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Alguns CPFs para teste
+
+- 086.492.750-95
+- 984.928.230-46
+- 582.106.150-41
+- 263.220.420-84
+- 333.535.550-48
+
+Caso seja necessário mais CPFs para teste, pode-se utilizar o site 
+https://www.4devs.com.br/gerador_de_cpf
+
+## Como executar o frontend do projeto
+
+### Primeiro instalar as dependências
+```
+npm install
+```
+### Depois executar o projeto
+```
+npm run dev
+```
+### Abrir o navegador e acessar o endereço:
+```
+http://localhost:5173/
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Explicação breve do porquê das escolhas tomadas durante o desenvolvimento da solução
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Foi utilizado o react router dom para a navegação entre as páginas,
+o material-ui para a estilização dos componentes e o axios para a comunicação com a API.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+O material-ui além de fácil utilização também é responsivo, o que facilita a adaptação da aplicação para diferentes 
+dispositivos.
+
+Foi usado o diretório /ui para armazenar componentes que seriam reutilizados em diferentes partes da aplicação.
+Também poderia ser utilizado para armazenar o conteúdo dos index.tsx, mas se decidiu contra isso por questões de não ser
+necessário nesse projeto. Além de não ter sido necessário criar outros diretórios além do /Util para organização do código.
+
+Não foi criado um diretório Pages para armazenar os diretórios de cada página por ser um projeto pequeno
+e não ter sido considerado necessário.
+
+O ID dos diversos itens nesse projeto foram deixados para o usuário inserir para facilitar a utilização
+e teste da aplicação.
+
+O único lugar no código que se decidiu por não ser em inglês, fora o que vai ser exibido para o usuário,
+foi o valor do voto nos botões ("radio group") para escolha de voto. Isso foi feito para facilitar o transporte de dado
+para o backend.
+
+
+O atributo inputProps em Session/index.tsx está marcado como obsoleto. Apesar da pesquisa, 
+nenhuma solução alternativa foi encontrada. A documentação do Material-UI sugere que
+ele ainda é utilizável, pois nenhuma substituição foi fornecida.
+
+"
+You might also have noticed that some native HTML input properties are missing from the TextField component.
+This is on purpose. The component takes care of the most used properties. Then, it's up to the user to use
+the underlying component shown in the following demo. Still, you can use inputProps 
+(and InputProps, InputLabelProps properties) if you want to avoid some boilerplate.
+" (https://mui.com/material-ui/react-text-field/#components)
