@@ -20,18 +20,21 @@ export default function Agenda() {
         console.log('Descrição: ', description)
 
         const response = {id, title, description};
-        await apiFetch.post('/agenda', {
-            body: response,
-        });
+        try {
+            await apiFetch.post('/agenda',
+                response
+            );
+            console.log('Pauta criada com sucesso!')
+        } catch (e) {
+            console.error(e)
+        }
     }
 
     return (
-
         <MainContainer>
             <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                 <h1>Criar uma Pauta</h1>
             </Grid2>
-
             <Box
                 component="form"
                 sx={{'& .MuiTextField-root': {m: 1, width: '45ch'}}}
@@ -40,38 +43,37 @@ export default function Agenda() {
                 onSubmit={createAgenda}
             >
                 <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
-                        <Stack spacing={2}>
-                            <TextField
-                                required
-                                id="id"
-                                label="ID da Pauta"
-                                variant="filled"
-                                onChange={(e) => setId(e.target.value)}
-                            />
-
-                            <TextField
-                                id="title"
-                                label="Título"
-                                variant="filled"
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-
-                            <TextField
-                                required
-                                id="description"
-                                label="Descrição"
-                                multiline
-                                rows={4}
-                                variant="filled"
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-
-                            <Button variant="contained" color="success" type="submit">
-                                Criar
-                            </Button>
-                            <ReturnButton/>
-                        </Stack>
-
+                    <Stack spacing={2}>
+                        <TextField
+                            required
+                            id="id"
+                            label="ID da Pauta"
+                            variant="filled"
+                            color="success"
+                            onChange={(e) => setId(e.target.value)}
+                        />
+                        <TextField
+                            id="title"
+                            label="Título"
+                            variant="filled"
+                            color="success"
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <TextField
+                            required
+                            id="description"
+                            label="Descrição"
+                            multiline
+                            rows={4}
+                            variant="filled"
+                            color="success"
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                        <Button variant="contained" color="success" type="submit">
+                            Criar
+                        </Button>
+                        <ReturnButton/>
+                    </Stack>
                 </Grid2>
             </Box>
         </MainContainer>

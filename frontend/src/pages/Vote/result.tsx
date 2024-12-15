@@ -1,6 +1,7 @@
 "use client";
 import apiFetch from "../../axios/config";
 import {
+    Alert,
     Box, Button,
     Grid2,
     Stack, TextField,
@@ -12,7 +13,6 @@ import {useState} from "react";
 
 export default function VoteResult() {
     const [sessionId, setSessionId] = useState("");
-    // const [voteResult, setVoteResult] = useState([]);
     const [voteResult, setVoteResult] = useState<VoteResult | null>(null);
 
     interface VoteResult {
@@ -22,19 +22,18 @@ export default function VoteResult() {
     }
 
     const getVoteResult = async () => {
-        // setVoteResult([]); // Reset voteResult state
         try {
             const response = await apiFetch.get(`/agenda/session/associated/result`, {
-                params: { sessionId }
+                params: {sessionId}
             }).then((response) => response);
             const data = response.data.body;
             setVoteResult(data);
 
-            // { voteYes: "2", voteNo: "1", totalVotes: "3" }
             console.log(data);
 
             return data;
         } catch (e) {
+
             console.error(e);
         }
     };
@@ -44,7 +43,6 @@ export default function VoteResult() {
             <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                 <h1>Resultado das Votações</h1>
             </Grid2>
-
             <Box
                 component="form"
                 sx={{'& .MuiTextField-root': {m: 1, width: '45ch'}}}
@@ -69,15 +67,17 @@ export default function VoteResult() {
                         >
                             Pesquisar Resultado
                         </Button>
-
                         <Box sx={{'& .MuiTextField-root': {m: 1, width: '35ch'}}}>
                             {voteResult?.totalVotes == 0 || voteResult === null ?
                                 (<Typography variant="body2" gutterBottom>
+                                    <Alert variant="outlined" severity="warning">
+                                        Um ID de sessão válida é importante.
+                                    </Alert>
                                     <br/><br/><br/>
                                     Nenhuma votação foi realizada.
                                     <br/><br/><br/>
                                 </Typography>)
-                             :
+                                :
                                 (<Box>
                                     <Typography variant="body2" gutterBottom>
                                         Resultado da votação:
@@ -92,7 +92,8 @@ export default function VoteResult() {
                                         Total de Votos: {voteResult.totalVotes}
                                     </Typography>
                                     <Typography variant="body2" gutterBottom>
-                                        Resultado da votação: {voteResult?.voteYes > voteResult?.voteNo ? "Aprovado" : "Reprovado"}
+                                        Resultado da
+                                        votação: {voteResult?.voteYes > voteResult?.voteNo ? "Aprovado" : "Reprovado"}
                                     </Typography>
                                     <br/>
                                     <br/>
@@ -101,10 +102,9 @@ export default function VoteResult() {
                         </Box>
                     </Stack>
                 </Grid2>
-
                 <Grid2 display="flex" justifyContent="center" alignItems="center" size="grow">
                     <Stack spacing={2}>
-                        <ReturnButton />
+                        <ReturnButton/>
                     </Stack>
                 </Grid2>
             </Box>

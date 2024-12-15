@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {Box, Button, Grid2, Paper, Stack} from "@mui/material";
+import {Alert, Box, Button, Grid2, Paper, Stack} from "@mui/material";
 import {Navigate} from "react-router-dom";
 import MainContainer from "../ui/Util/main-container.tsx";
 
@@ -16,24 +16,18 @@ function Home() {
     if (goToAssociated) {
         return <Navigate to="/associated" />;
     }
-
     if (goToAgenda) {
         return <Navigate to="/agenda" />;
     }
-
     if (goToSession) {
         return <Navigate to="/session" />
     }
-
     if (goToVote) {
         return <Navigate to="/vote" />
     }
-
     if (goToVoteResult) {
         return <Navigate to="/vote/result" />
     }
-
-
 
     return (
         <MainContainer>
@@ -71,7 +65,6 @@ function Home() {
                                         setGoToAgenda(true);
                                     }}
                             >
-
                                 Criar uma PAUTA
                             </Button>
                         </Paper>
@@ -81,7 +74,6 @@ function Home() {
                                         setGoToSession(true);
                                     }}
                             >
-
                                 Abrir uma Sessão para votação
                             </Button>
                         </Paper>
@@ -91,7 +83,6 @@ function Home() {
                                         setGoToVote(true);
                                     }}
                             >
-
                                 Votar
                             </Button>
                         </Paper>
@@ -102,11 +93,12 @@ function Home() {
                                         setGoToVoteResult(true);
                                     }}
                             >
-
                                 Resultado das Votações
                             </Button>
                         </Paper>
-
+                        <Alert variant="outlined" severity="info" sx={{width: '43ch'}}>
+                            Os IDs exigidos nesse aplicação não possuem restrição de número ou letra.
+                        </Alert>
                     </Stack>
                 </Grid2>
             </Box>
