@@ -31,6 +31,31 @@ de DDD (Domain Driven Development) e "Clean Architecture".
 - Docker
 - Docker Compose
 
+## Alguns CPFs para teste
+
+- 086.492.750-95
+- 984.928.230-46
+- 582.106.150-41
+- 263.220.420-84
+- 333.535.550-48
+
+
+## Como executar o projeto
+
+Para rodar o projeto é necessário ter o Java 23 e o Maven instalados.
+Assim como estar com o docker e o docker-compose instalados e funcionando.
+
+### Primeiro instalar as dependências
+```
+
+```
+
+### Depois de executar o projeto e com o docker funcionando
+```
+docker compose up -d
+```
+
+
 
 ### Explicação breve do porquê das escolhas tomadas durante o desenvolvimento da solução
 
@@ -57,6 +82,7 @@ validação do CPF que foi adicionado ao código para garantir que não há CPFs
 
 A atualização de se uma sessão está aberta ou encerrada se dá quando ela é procurada.
 
+O Status da pauta não fecha, pois não há um limite para quantas sessões podem ser criadas nela.
 
 
 ### Versionamento da API
@@ -71,3 +97,31 @@ por exemplo: content-type: `application/vnd.api.v1+json`. Aconselhável quando a
 mudanças incrementais ou mesmo mundanças de no conteúdo trocado com o cliente.
 
 Portanto, eu versionaria a API conforme a mundança que será feita no código.
+
+
+## Como rodar o backend do projeto
+
+ Para rodar o projeto é necessário ter o Java e o Maven e o Docker funcionando.
+
+### Subir o banco de dados
+```
+docker compose up -d
+```
+
+
+- Execute a aplicação Spring Boot.
+```
+mvn clean
+```
+```
+mvn spring-boot:run
+```
+
+
+
+
+
+### Para acessar a aplicação:
+```
+http://localhost:8080/
+```
