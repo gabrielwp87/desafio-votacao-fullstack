@@ -48,6 +48,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleNoSessionToVoteException(final NoSessionToVoteException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(NoVoteException.class)
+    public ResponseEntity<?> handleNoVoteException(final NoVoteException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.I_AM_A_TEAPOT);
+    }
 }
 
 

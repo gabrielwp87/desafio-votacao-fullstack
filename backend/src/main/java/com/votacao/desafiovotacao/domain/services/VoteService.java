@@ -5,6 +5,7 @@ import com.votacao.desafiovotacao.domain.entities.Session;
 import com.votacao.desafiovotacao.domain.entities.Vote;
 import com.votacao.desafiovotacao.domain.exceptions.AlreadyVotedException;
 import com.votacao.desafiovotacao.domain.exceptions.NoSessionToVoteException;
+import com.votacao.desafiovotacao.domain.exceptions.NoVoteException;
 import com.votacao.desafiovotacao.infra.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,12 @@ public class VoteService {
 
         if (validateSessionForVoting(voteDTO)) {
             throw new NoSessionToVoteException();
+        }
+
+        if (voteDTO.vote().isEmpty() || voteDTO.associatedId().isEmpty()
+                || voteDTO.agendaId().isEmpty() || voteDTO.sessionId().isEmpty()
+                || voteDTO.voteId().isEmpty()) {
+            throw new NoVoteException();
         }
 
         Vote vote = Vote.builder()
