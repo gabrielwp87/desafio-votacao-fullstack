@@ -33,6 +33,8 @@ Com o intuito de criar um fronted simples para a API de votação em pautas.
 Caso seja necessário mais CPFs para teste, pode-se utilizar o site 
 https://www.4devs.com.br/gerador_de_cpf
 
+Pois adicionei um serviço para validar o CPF informado.
+
 ## Como executar o frontend do projeto
 
 ### Primeiro instalar as dependências
@@ -57,19 +59,19 @@ O material-ui além de fácil utilização também é responsivo, o que facilita
 dispositivos.
 
 Foi usado o diretório /ui para armazenar componentes que seriam reutilizados em diferentes partes da aplicação.
-Também poderia ser utilizado para armazenar o conteúdo dos index.tsx, mas se decidiu contra isso por questões de não ser
+Também poderia ser utilizado para armazenar o conteúdo dos index.tsx, mas decidi contra isso por questões de não ser
 necessário nesse projeto. Além de não ter sido necessário criar outros diretórios além do /Util para organização do código.
 
-Não foi criado um diretório Pages para armazenar os diretórios de cada página por ser um projeto pequeno
-e não ter sido considerado necessário.
+Criei um diretório Pages para armazenar os diretórios de cada página por 
+para facilitar a organização e compreensão do projeto.
 
-O ID dos diversos itens nesse projeto foram deixados para o usuário inserir para facilitar a utilização
-e teste da aplicação.
+Escolhi deixar que o ID dos diversos itens nesse projeto sejam inseridos diretamente pelo
+o usuário para facilitar a utilização e teste da aplicação.
 
-O único lugar no código que se decidiu por não ser em inglês, fora o que vai ser exibido para o usuário,
-foi o valor do voto nos botões ("radio group") para escolha de voto. Isso foi feito para facilitar o transporte de dado
-para o backend.
-
+Os únicos lugares no código que se decidiu por não ser em inglês, foi 
+nos readme's, o que vai ser exibido para o usuário e o valor do voto
+nos botões ("radio group") para escolha de voto. Isso foi feito para 
+facilitar o transporte de dado para o backend.
 
 O atributo inputProps em Session/index.tsx está marcado como obsoleto. Apesar da pesquisa, 
 nenhuma solução alternativa foi encontrada. A documentação do Material-UI sugere que
